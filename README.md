@@ -15,6 +15,34 @@
 ## 📖 Descripción
 El proyecto diseña y desarrola un sistema de gestión integral para el centro de convenciones y predio ferial "Epicentro Gourmet". 
 El objetivo principal es optimizar la administración de sus festivales gastronómicos anuales, controlando las unidades de venta, el personal asignado y el rendimiento económico de cada jornada.
+## ✅ Requisitos
+
+## 👤 Responsables de implementación por caso de uso
+([Ver registro casos de uso](https://docs.google.com/spreadsheets/d/13BSYgJk7UngvqOosxz0KS95iyTDTOBHw4G7y2lSWsZQ/edit?usp=sharing))
+| Caso de Uso | Método | Responsable |
+| ------------ | ------------ | ------------ |
+| 1 | agregarPersona | Liberatori Gonzalo |
+| 1 | agregarUnidad | Ramos Julián |
+| 1 | agregarFestival | Enrique Leandro |
+| 2 | encontrarPersona | Liberatori Gonzalo |
+| 2 | encontrarUnidad | Ramos Julián |
+| 2 | encontrarFestival | Enrique Leandro |
+| 2 | encontrarPlatoEstrella | Enrique Leandro |
+| 2 | encontrarPlato | Enrique Leandro |
+| 2 | encontrarPedido | Martinez Martina |
+| 3 | calcularCanon | Ramos JuliánLiberatori Gonzalo |
+| 4 | calcularSueldo | Liberatori Gonzalo |
+| 4 | validarAntiguedad | Liberatori Gonzalo |
+| 4 | calcularPlus | Liberatori Gonzalo |
+| 5 | validarPedido | Martinez Martina |
+| 6 | reporteRecaudacion | Martinez Martina |
+| 7 | filtrarPorEdad | Liberatori Gonzalo |
+| 8 | calcularRecaudacion | Ramos Julián |
+| 8 | calcularRentabilidadNeta | Ramos Julián |
+| 9 | calcularRentabilidadNetaEntreFechas | Ramos Julián |
+| 10 | rankingeporteRecaudacion | Martinez Martina |
+| 11 | auditoriaPersonal | Enrique Leandro |
+| 12 | encontrarUnidadesMayorCanon | Martinez Martina |
 
 ## 🏗️ Arquitectura y Clases Principales
 La solución se estructura bajo una arquitectura orientada a objetos basada en los siguientes clases principales:
