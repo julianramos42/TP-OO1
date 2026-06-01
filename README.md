@@ -40,7 +40,7 @@ El objetivo principal es optimizar la administración de sus festivales gastron�
 | 8 | calcularRecaudacion | Ramos Julián |
 | 8 | calcularRentabilidadNeta | Ramos Julián |
 | 9 | calcularRentabilidadNetaEntreFechas | Ramos Julián |
-| 10 | rankingeporteRecaudacion | Martinez Martina |
+| 10 | rankingRecaudacion | Martinez Martina |
 | 11 | auditoriaPersonal | Enrique Leandro |
 | 12 | encontrarUnidadesMayorCanon | Martinez Martina |
 
@@ -61,10 +61,25 @@ Control económico (Plato, Pedidos, Recaudación): Cumplen el rol de gestión de
 ```
 src/
   └── java/
-    └── Tp-OO1/
-      ├── model/       # Clases
-      ├── test/  # Test de casos de uso
-      └── 
+    └── Tp-OO1-Grupo20/
+      ├── modelo/       # Clases
+          ├── Sistema.java
+          ├── Festival.java
+          ├── Costo.java
+          ├── UnidadDeVenta.java
+          ├── PuestoDesarmable.java
+          ├── Foodtrcuk.java
+          ├── Persona.java
+          ├── Cajero.java
+          ├── Cocinero.java
+          ├── Plato.java
+          ├── ItemPlato.java
+          ├── Pedido.java
+          ├── ReporteVenta.java
+          └── ReporteMayorCanon.java
+      └── test/  # Test de casos de uso
+          └── Test.java
+       
 ```
 ><div align="center"> Primer cuatrimestre de 2026 - Universidad Nacional de Lanús.
 >
