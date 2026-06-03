@@ -33,6 +33,35 @@ public class Sistema {
 		return unidad;
 	}
 	
+	//encontrarFestival
+	public Festival encontrarFestival(String nombre) {
+		Festival festival = null;
+		int i = 0;
+		
+		while (festival == null && i < this.lstFestivales.size()) {
+			if (this.lstFestivales.get(i).getNombre().equals(nombre)) {
+				festival = this.lstFestivales.get(i);
+			}
+		}
+	}
+	
+	//agregarFestival
+	public boolean agregarFestival(String nombre, String temporada, LocalDate fechaInicio, LocalDate fechaFin, Costo costo) throws Exception {
+		if(this.encontrarFestival(nombre) != null) {
+			throw new Exception("El festival ya existe.");
+		}
+		
+		int id;
+		
+		if(this.lstFestivales.isEmpty()) {
+			id = 1;
+		} else {
+			id = this.lstFestivales.get(this.lstFestivales.size() - 1).getIdFestival() + 1;
+		}
+		
+		return this.lstFestivales.add(new Festival(id, nombre, temporada, fechaInicio, fechaFin, costo));
+	}
+	
 	//agregarFoodTruck
 	public boolean agregarFoodTruck(String nombreComercial, String codigoUnico, double superficie, Persona responsable, String patente, boolean conexionElectrica) throws Exception {
 		if(this.encontrarUnidad(codigoUnico) != null) {
