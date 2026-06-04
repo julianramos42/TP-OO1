@@ -3,6 +3,7 @@ package modelo;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class Sistema {
@@ -47,6 +48,19 @@ public class Sistema {
 
 		return festival;
 	}
+	
+	//encontrarPedido
+		public Pedido encontrarPedido(String codigoTransaccion) {
+			Pedido pedido = null;
+			int i = 0;
+			while(i < lstPedidos.size() && pedido == null) {
+				if(lstPedidos.get(i).getCodigoTransaccion().equalsIgnoreCase(codigoTransaccion)) {
+					pedido = lstPedidos.get(i);
+				}
+				i++;
+			}
+			return pedido;
+		}
 	
 	//agregarFestival
 	public boolean agregarFestival(String nombre, String temporada, LocalDate fechaInicio, LocalDate fechaFin, Costo costo) throws Exception {
@@ -220,4 +234,113 @@ public class Sistema {
 	
 	
 	
+	//agregarPedido o validarPedido
+	public boolean agregarPedido(String codigoTransaccion, UnidadDeVenta unidad, Festival festival, LocalDate fecha) throws Exception {
+		if(encontrarUnidad(unidad.getCodigoUnico()) == null || encontrarFestival(festival.getNombre()) == null) {
+			throw new Exception("La unidad o festival no existe");
+		}
+		int id = 1;
+		if(!lstPedidos.isEmpty()) {
+			id = lstPedidos.get(lstPedidos.size()-1).getIdPedido()+1;
+		}
+		return lstPedidos.add( new Pedido(id, codigoTransaccion, unidad, festival, fecha));
+	}
+	//agregarItem a Pedido
+	public boolean agregarItemAPedido(String nombre, int cantidad, String codigoTransaccion) throws Exception{
+		Pedido pedido = encontrarPedido(codigoTransaccion);
+		if(cantidad <= 0 || pedido == null) {
+			throw new Exception("Pedido no creado");
+		}
+		return pedido.agregarItemPlato(nombre, cantidad);
+		
+	}
+	//Recaudacion entre fechas
+	public List<ReporteVenta> reporteRecaudacionEntreFechas(Festival festival, LocalDate fechaDesde, LocalDate fechaHasta) throws Exception {
+		if(encontrarFestival(festival.getNombre()) == null) {
+			throw new Exception("El festival no existe");
+		}
+		List<ReporteVenta> lstReportes = new ArrayList<ReporteVenta>();
+		for(UnidadDeVenta u : festival.getLstUnidades()) {
+			lstReportes.add(new ReporteVenta(LocalDate.now(), u, calcularRecaudacion(u, fechaDesde, fechaHasta)));
+		}
+		return lstReportes;
+		
+	}
+	//Recaudacion total de un festival
+	public List<ReporteVenta> reporteRecaudacion(Festival festival) throws Exception{
+		if(encontrarFestival(festival.getNombre()) == null) {
+			throw new Exception("El festival no existe");
+		}
+		List<ReporteVenta> lstReportes = new ArrayList<ReporteVenta>();
+		for(UnidadDeVenta u : festival.getLstUnidades()) {
+			lstReportes.add(new ReporteVenta(LocalDate.now(), u, calcularRecaudacion(u)));
+		}
+		
+		return lstReportes;
+	}
+	//Ranking de unidades
+	public List<UnidadDeVenta> rankingDeUnidades(Festival festival) throws Exception{
+		if(encontrarFestival(festival.getNombre()) == null) {
+			throw new Exception("El festival no existe");
+		}
+		//ranking de unidades
+		List<UnidadDeVenta> ranking = new ArrayList<UnidadDeVenta>();
+		
+		//unidades y recaudacion del festival
+		List<ReporteVenta> reportes = reporteRecaudacion(festival);
+		ordenarPorRecaudacion(reportes);
+		
+		//agrega las primeras tres unidades con mayor recaudacion
+		for(int i = 0; i < 3; i++) {
+			ranking.add(reportes.get(i).getUnidad());
+		}
+		return ranking;
+		
+	}
+	public void ordenarPorRecaudacion(List<ReporteVenta> lista) {
+        int n = lista.size();
+        for (int i = 0; i < n - 1; i++) {
+            for (int j = 0; j < n - i - 1; j++) {
+                if (lista.get(j).getRecaudacion() < lista.get(j + 1).getRecaudacion()) {
+                    ReporteVenta temp = lista.get(j);
+                    lista.set(j, lista.get(j + 1));
+                    lista.set(j + 1, temp);
+                 
+                }
+            }
+            
+        }
+    }
+	public void ordenarPorCanon(List<ReporteMayorCanon> lista) {
+		int n = lista.size();
+		for (int i = 0; i < n - 1; i++) {
+            for (int j = 0; j < n - i - 1; j++) {
+                if (lista.get(j).getCanon() < lista.get(j + 1).getCanon()) {
+                    ReporteMayorCanon temp = lista.get(j);
+                    lista.set(j, lista.get(j + 1));
+                    lista.set(j + 1, temp);
+                 
+                }
+            }
+            
+        }
+	}
+	public List<ReporteMayorCanon> reporteMayoresCanon(Festival festival) throws Exception{
+		if(encontrarFestival(festival.getNombre()) == null) {
+			throw new Exception("El festival no existe");
+		}
+		List<ReporteMayorCanon> lstMayorCanon = new ArrayList<ReporteMayorCanon>();
+		for(UnidadDeVenta u : festival.getLstUnidades()) {
+			if(u instanceof PuestoDesarmable) {
+				PuestoDesarmable p = (PuestoDesarmable) u;
+				lstMayorCanon.add(new ReporteMayorCanon(u, p.calcularCanon(festival.getCosto().getPorSuperficie(), festival.getCosto().getPorMontaje())));
+			}else {
+				FoodTruck f = (FoodTruck) u;
+				lstMayorCanon.add(new ReporteMayorCanon(u, f.calcularCanon(festival.getCosto().getPorSuperficie(), festival.getCosto().getPorMontaje())));
+			}
+		}
+		ordenarPorCanon(lstMayorCanon);
+		return lstMayorCanon;
+		
+	}
 }

@@ -106,7 +106,7 @@ public abstract class Persona {
 	
 	public boolean equals(Persona persona) {
 		
-		return persona.getIdPersona() == this.dni;
+		return persona.getDni() == this.dni;
 	}
 	
 	public int calcularEdad() {
