@@ -118,9 +118,6 @@ public abstract class UnidadDeVenta {
 			}
 			i++;
 		}
-		
-		return plato;
-	}
 	
 	@Override
 	public String toString() {

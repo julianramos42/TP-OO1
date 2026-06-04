@@ -86,4 +86,27 @@ public class Festival {
 				+ ", fechaInicio: " + this.fechaInicio + ", fechaFin: " + this.fechaFin + ", costo: " + this.costo
 				+ ", lstUnidades: " + this.lstUnidades + "]";
 	}
+	
+	public List<Persona> auditoriaPersonal() {
+	    List<Persona> personal = new ArrayList<Persona>();
+
+	    for (UnidadDeVenta unidadDeVenta : this.lstUnidades) {
+	        for (Persona persona : unidadDeVenta.getLstPersonas()) {
+
+	            boolean repetida = false;
+
+	            for (Persona personaAgregada : personal) {
+	                if (personaAgregada.equals(persona)) {
+	                    repetida = true;
+	                }
+	            }
+
+	            if (!repetida) {
+	                personal.add(persona);
+	            }
+	        }
+	    }
+
+	    return personal;
+	}
 }
