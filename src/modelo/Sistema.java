@@ -19,6 +19,7 @@ public class Sistema {
 		this.lstPedidos = new ArrayList<Pedido>();
 	}
 	
+//CASO DE USO 1: BUSQUEDA POR ATRIBUTO IDENTIFICADOR ----------------------------------
 	//encontrarUnidad
 	public UnidadDeVenta encontrarUnidad(String codigoUnico) {
 		UnidadDeVenta unidad = null;
@@ -61,6 +62,23 @@ public class Sistema {
 			}
 			return pedido;
 		}
+	//encontrarPersona
+	public Persona encontrarPersona(long dni) {
+		
+		Persona persona = null;
+		int i = 0;
+		
+		while(persona == null && i < this.lstPersonal.size()){
+			
+			if(this.lstPersonal.get(i).getDni() == dni) {
+				persona = this.lstPersonal.get(i);
+			}
+			i++;
+		}
+		return persona;
+	}
+	
+//CASO DE USO 2: AGREGAR ELEMENTOS A UNA LISTA ----------------------------------
 	
 	//agregarFestival
 	public boolean agregarFestival(String nombre, String temporada, LocalDate fechaInicio, LocalDate fechaFin, Costo costo) throws Exception {
@@ -107,6 +125,66 @@ public class Sistema {
 		return this.lstUnidades.add(new PuestoDesarmable(id, nombreComercial, codigoUnico, superficie, responsable, cantCarpas, tiempoDeArmado));
 	}
 	
+	//agregarCajero
+	public boolean agregarCajero(String nombre, String apellido, long dni, LocalDate fechaNacimiento, LocalDate fechaIngreso, double sueldoBase, String turno, double bonoPorAntiguedad) throws Exception {
+		    
+		    if(this.encontrarPersona(dni) != null) {
+		        throw new Exception("Ya existe una persona con ese DNI.");
+		    }
+		    
+		    if(Period.between(fechaNacimiento, LocalDate.now()).getYears() < 18) {
+		        throw new Exception("ERROR: El empleado debe ser mayor de edad.");
+		    }
+		    
+		    int id = 1;
+		    if(!this.lstPersonal.isEmpty()) {
+		        id = this.lstPersonal.get(this.lstPersonal.size()-1).getIdPersona() + 1;
+		    }
+		    
+		    
+		    return this.lstPersonal.add(new Cajero(id, nombre, apellido, dni, fechaNacimiento, fechaIngreso, sueldoBase, turno, bonoPorAntiguedad));
+		}
+	
+	//agregarCocinero
+	public boolean agregarCocinero(String nombre, String apellido, long dni, LocalDate fechaNacimiento, LocalDate fechaIngreso, double sueldoBase, String especialidad, String categoria, double plusCategoria) throws Exception {
+		if(this.encontrarPersona(dni) != null) {
+			throw new Exception("Ya existe una persona con ese DNI.");
+		}
+		
+		if(Period.between(fechaNacimiento, LocalDate.now()).getYears() < 18) {
+			throw new Exception("ERROR: El empleado debe ser mayor de edad.");
+		}
+		
+		int id = 1;
+		if(!this.lstPersonal.isEmpty()) {
+			id = this.lstPersonal.get(this.lstPersonal.size()-1).getIdPersona() + 1;
+		}
+		
+		return this.lstPersonal.add(new Cocinero(id, nombre, apellido, dni, fechaNacimiento, fechaIngreso, sueldoBase, especialidad, categoria, plusCategoria));
+	}
+	
+	//agregarPedido o validarPedido -> CASO DE USO 5
+		public boolean agregarPedido(String codigoTransaccion, UnidadDeVenta unidad, Festival festival, LocalDate fecha) throws Exception {
+			if(encontrarUnidad(unidad.getCodigoUnico()) == null || encontrarFestival(festival.getNombre()) == null) {
+				throw new Exception("La unidad o festival no existe");
+			}
+			int id = 1;
+			if(!lstPedidos.isEmpty()) {
+				id = lstPedidos.get(lstPedidos.size()-1).getIdPedido()+1;
+			}
+			return lstPedidos.add( new Pedido(id, codigoTransaccion, unidad, festival, fecha));
+		}
+		
+	//agregarItem a Pedido
+	public boolean agregarItemAPedido(String nombre, int cantidad, String codigoTransaccion) throws Exception{
+		Pedido pedido = encontrarPedido(codigoTransaccion);
+		if(cantidad <= 0 || pedido == null) {
+			throw new Exception("Pedido no creado");
+		}
+		return pedido.agregarItemPlato(nombre, cantidad);
+		
+	}
+//CALCULOS ----------------------------------
 	// CALCULA LA RECAUDACION HISTORICA DE UNA UNIDAD DE VENTA
 	public double calcularRecaudacion(UnidadDeVenta unidad) {
 	    double recaudacionTotal = 0;
@@ -119,7 +197,7 @@ public class Sistema {
 	    
 	    return recaudacionTotal;
 	}
-	
+
 	// CALCULA LA RENTABLIDIDAD NETA HISTORICA DE UNA UNIDAD, costoSuperficie y costoAdicional SON VARIABLES GENERICAS PARA NO TENER DATOS HARDCODEADOS (LOS $500 | $2000 | $10)
 	public double calcularRentabilidadNeta(UnidadDeVenta unidad, double costoSuperficie, double costoAdicional) {
 	    double rentabilidad = this.calcularRecaudacion(unidad); // NOS DA LA GANANCIA BRUTA
@@ -164,58 +242,8 @@ public class Sistema {
 	    
 	    return rentabilidad;
 	}
-	
-	public Persona encontrarPersona(long dni) {
-		
-		Persona persona = null;
-		int i = 0;
-		
-		while(persona == null && i < this.lstPersonal.size()){
-			
-			if(this.lstPersonal.get(i).getDni() == dni) {
-				persona = this.lstPersonal.get(i);
-			}
-			i++;
-		}
-		return persona;
-	}
-	
-	public boolean agregarCajero(String nombre, String apellido, long dni, LocalDate fechaNacimiento, LocalDate fechaIngreso, double sueldoBase, String turno, double bonoPorAntiguedad) throws Exception {
-	    
-	    if(this.encontrarPersona(dni) != null) {
-	        throw new Exception("Ya existe una persona con ese DNI.");
-	    }
-	    
-	    if(Period.between(fechaNacimiento, LocalDate.now()).getYears() < 18) {
-	        throw new Exception("ERROR: El empleado debe ser mayor de edad.");
-	    }
-	    
-	    int id = 1;
-	    if(!this.lstPersonal.isEmpty()) {
-	        id = this.lstPersonal.get(this.lstPersonal.size()-1).getIdPersona() + 1;
-	    }
-	    
-	    
-	    return this.lstPersonal.add(new Cajero(id, nombre, apellido, dni, fechaNacimiento, fechaIngreso, sueldoBase, turno, bonoPorAntiguedad));
-	}
-	
-	public boolean agregarCocinero(String nombre, String apellido, long dni, LocalDate fechaNacimiento, LocalDate fechaIngreso, double sueldoBase, String especialidad, String categoria, double plusCategoria) throws Exception {
-		if(this.encontrarPersona(dni) != null) {
-			throw new Exception("Ya existe una persona con ese DNI.");
-		}
-		
-		if(Period.between(fechaNacimiento, LocalDate.now()).getYears() < 18) {
-			throw new Exception("ERROR: El empleado debe ser mayor de edad.");
-		}
-		
-		int id = 1;
-		if(!this.lstPersonal.isEmpty()) {
-			id = this.lstPersonal.get(this.lstPersonal.size()-1).getIdPersona() + 1;
-		}
-		
-		return this.lstPersonal.add(new Cocinero(id, nombre, apellido, dni, fechaNacimiento, fechaIngreso, sueldoBase, especialidad, categoria, plusCategoria));
-	}
-	
+
+//LISTAS FILTRADAS ----------------------------------
 	public List<Persona> filtroPorEdad(LocalDate inicio, LocalDate fin) {
 		List<Persona> personalFiltrado = new ArrayList<Persona>();
 		
@@ -232,53 +260,7 @@ public class Sistema {
 		return personalFiltrado;
 	}
 	
-	
-	
-	//agregarPedido o validarPedido
-	public boolean agregarPedido(String codigoTransaccion, UnidadDeVenta unidad, Festival festival, LocalDate fecha) throws Exception {
-		if(encontrarUnidad(unidad.getCodigoUnico()) == null || encontrarFestival(festival.getNombre()) == null) {
-			throw new Exception("La unidad o festival no existe");
-		}
-		int id = 1;
-		if(!lstPedidos.isEmpty()) {
-			id = lstPedidos.get(lstPedidos.size()-1).getIdPedido()+1;
-		}
-		return lstPedidos.add( new Pedido(id, codigoTransaccion, unidad, festival, fecha));
-	}
-	//agregarItem a Pedido
-	public boolean agregarItemAPedido(String nombre, int cantidad, String codigoTransaccion) throws Exception{
-		Pedido pedido = encontrarPedido(codigoTransaccion);
-		if(cantidad <= 0 || pedido == null) {
-			throw new Exception("Pedido no creado");
-		}
-		return pedido.agregarItemPlato(nombre, cantidad);
-		
-	}
-	//Recaudacion entre fechas
-	public List<ReporteVenta> reporteRecaudacionEntreFechas(Festival festival, LocalDate fechaDesde, LocalDate fechaHasta) throws Exception {
-		if(encontrarFestival(festival.getNombre()) == null) {
-			throw new Exception("El festival no existe");
-		}
-		List<ReporteVenta> lstReportes = new ArrayList<ReporteVenta>();
-		for(UnidadDeVenta u : festival.getLstUnidades()) {
-			lstReportes.add(new ReporteVenta(LocalDate.now(), u, calcularRecaudacion(u, fechaDesde, fechaHasta)));
-		}
-		return lstReportes;
-		
-	}
-	//Recaudacion total de un festival
-	public List<ReporteVenta> reporteRecaudacion(Festival festival) throws Exception{
-		if(encontrarFestival(festival.getNombre()) == null) {
-			throw new Exception("El festival no existe");
-		}
-		List<ReporteVenta> lstReportes = new ArrayList<ReporteVenta>();
-		for(UnidadDeVenta u : festival.getLstUnidades()) {
-			lstReportes.add(new ReporteVenta(LocalDate.now(), u, calcularRecaudacion(u)));
-		}
-		
-		return lstReportes;
-	}
-	//Ranking de unidades
+//Ranking de unidades
 	public List<UnidadDeVenta> rankingDeUnidades(Festival festival) throws Exception{
 		if(encontrarFestival(festival.getNombre()) == null) {
 			throw new Exception("El festival no existe");
@@ -297,6 +279,10 @@ public class Sistema {
 		return ranking;
 		
 	}
+
+//ORDENAMIENTO ----------------------------------
+	
+	//Ordenamiento de lista por recaudacion
 	public void ordenarPorRecaudacion(List<ReporteVenta> lista) {
         int n = lista.size();
         for (int i = 0; i < n - 1; i++) {
@@ -311,6 +297,8 @@ public class Sistema {
             
         }
     }
+	
+	//Ordenamiento de lista por canon
 	public void ordenarPorCanon(List<ReporteMayorCanon> lista) {
 		int n = lista.size();
 		for (int i = 0; i < n - 1; i++) {
@@ -325,6 +313,34 @@ public class Sistema {
             
         }
 	}
+	
+//REPORTES ----------------------------------
+	
+	//Recaudacion total de un festival
+			public List<ReporteVenta> reporteRecaudacion(Festival festival) throws Exception{
+				if(encontrarFestival(festival.getNombre()) == null) {
+					throw new Exception("El festival no existe");
+				}
+				List<ReporteVenta> lstReportes = new ArrayList<ReporteVenta>();
+				for(UnidadDeVenta u : festival.getLstUnidades()) {
+					lstReportes.add(new ReporteVenta(LocalDate.now(), u, calcularRecaudacion(u)));
+				}
+				
+				return lstReportes;
+			}
+	//Recaudacion entre fechas
+		public List<ReporteVenta> reporteRecaudacionEntreFechas(Festival festival, LocalDate fechaDesde, LocalDate fechaHasta) throws Exception {
+			if(encontrarFestival(festival.getNombre()) == null) {
+				throw new Exception("El festival no existe");
+			}
+			List<ReporteVenta> lstReportes = new ArrayList<ReporteVenta>();
+			for(UnidadDeVenta u : festival.getLstUnidades()) {
+				lstReportes.add(new ReporteVenta(LocalDate.now(), u, calcularRecaudacion(u, fechaDesde, fechaHasta)));
+			}
+			return lstReportes;
+			
+		}
+	//Unidades de mayor Canon
 	public List<ReporteMayorCanon> reporteMayoresCanon(Festival festival) throws Exception{
 		if(encontrarFestival(festival.getNombre()) == null) {
 			throw new Exception("El festival no existe");
@@ -343,4 +359,6 @@ public class Sistema {
 		return lstMayorCanon;
 		
 	}
+	
+		
 }
