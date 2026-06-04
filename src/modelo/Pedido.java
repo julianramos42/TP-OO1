@@ -91,7 +91,7 @@ public class Pedido {
 	public double calcularGanancia() {
 		double costos = 0;
 		for(ItemPlato i : lstItemPlatos) {
-			costos += i.getPlato().getCosto();
+			costos += i.getPlato().getCosto() * i.getCantidad();
 		}
 		return(this.calcularTotal() - costos);
 	}
