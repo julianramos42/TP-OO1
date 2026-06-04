@@ -83,6 +83,20 @@ public abstract class UnidadDeVenta {
 		this.lstPlatos = lstPlatos;
 	}
 	
+	public Plato encontrarPlato(String nombre) {
+		Plato plato = null;
+		
+		int i = 0;
+		
+		while (plato == null && i < this.lstPlatos.size()) {
+			if (this.lstPlatos.get(i).getNombre().equals(nombre)) {
+				plato = this.lstPlatos.get(i);
+			}
+		}
+
+		return plato;
+	}
+	
 	@Override
 	public String toString() {
 		return "id: "+this.idUnidadDeVenta+", nombreComercial: "+this.nombreComercial+", codigoUnico: "+this.codigoUnico+", superficie: "+this.superficie+", responsable: "+ this.responsable+", lstPersonas: "+this.lstPersonas+", lstPlatos: "+this.lstPlatos;
