@@ -1,6 +1,7 @@
 package modelo;
 
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -149,4 +150,74 @@ public class Sistema {
 	    
 	    return rentabilidad;
 	}
+	
+	public Persona encontrarPersona(long dni) {
+		
+		Persona persona = null;
+		int i = 0;
+		
+		while(persona == null && i < this.lstPersonal.size()){
+			
+			if(this.lstPersonal.get(i).getDni() == dni) {
+				persona = this.lstPersonal.get(i);
+			}
+			i++;
+		}
+		return persona;
+	}
+	
+	public boolean agregarCajero(String nombre, String apellido, long dni, LocalDate fechaNacimiento, LocalDate fechaIngreso, double sueldoBase, String turno, double bonoPorAntiguedad) throws Exception {
+	    
+	    if(this.encontrarPersona(dni) != null) {
+	        throw new Exception("Ya existe una persona con ese DNI.");
+	    }
+	    
+	    if(Period.between(fechaNacimiento, LocalDate.now()).getYears() < 18) {
+	        throw new Exception("ERROR: El empleado debe ser mayor de edad.");
+	    }
+	    
+	    int id = 1;
+	    if(!this.lstPersonal.isEmpty()) {
+	        id = this.lstPersonal.get(this.lstPersonal.size()-1).getIdPersona() + 1;
+	    }
+	    
+	    
+	    return this.lstPersonal.add(new Cajero(id, nombre, apellido, dni, fechaNacimiento, fechaIngreso, sueldoBase, turno, bonoPorAntiguedad));
+	}
+	
+	public boolean agregarCocinero(String nombre, String apellido, long dni, LocalDate fechaNacimiento, LocalDate fechaIngreso, double sueldoBase, String especialidad, String categoria, double plusCategoria) throws Exception {
+		if(this.encontrarPersona(dni) != null) {
+			throw new Exception("Ya existe una persona con ese DNI.");
+		}
+		
+		if(Period.between(fechaNacimiento, LocalDate.now()).getYears() < 18) {
+			throw new Exception("ERROR: El empleado debe ser mayor de edad.");
+		}
+		
+		int id = 1;
+		if(!this.lstPersonal.isEmpty()) {
+			id = this.lstPersonal.get(this.lstPersonal.size()-1).getIdPersona() + 1;
+		}
+		
+		return this.lstPersonal.add(new Cocinero(id, nombre, apellido, dni, fechaNacimiento, fechaIngreso, sueldoBase, especialidad, categoria, plusCategoria));
+	}
+	
+	public List<Persona> filtroPorEdad(LocalDate inicio, LocalDate fin) {
+		List<Persona> personalFiltrado = new ArrayList<Persona>();
+		
+		for (Persona p : this.lstPersonal) {
+			
+			
+			if ((p.getFechaNacimiento().isEqual(inicio) || p.getFechaNacimiento().isAfter(inicio)) && 
+				(p.getFechaNacimiento().isEqual(fin) || p.getFechaNacimiento().isBefore(fin))) {
+				
+				personalFiltrado.add(p);
+			}
+		}
+		
+		return personalFiltrado;
+	}
+	
+	
+	
 }
