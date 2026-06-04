@@ -336,7 +336,7 @@ public class Sistema {
 				lstMayorCanon.add(new ReporteMayorCanon(u, p.calcularCanon(festival.getCosto().getPorSuperficie(), festival.getCosto().getPorMontaje())));
 			}else {
 				FoodTruck f = (FoodTruck) u;
-				lstMayorCanon.add(new ReporteMayorCanon(u, f.calcularCanon(festival.getCosto().getPorSuperficie(), festival.getCosto().getPorMontaje())));
+				lstMayorCanon.add(new ReporteMayorCanon(u, f.calcularCanon(festival.getCosto().getPorSuperficie(), festival.getCosto().getPorElectricidad())));
 			}
 		}
 		ordenarPorCanon(lstMayorCanon);
