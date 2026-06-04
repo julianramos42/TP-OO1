@@ -5,7 +5,7 @@ public class PuestoDesarmable extends UnidadDeVenta {
 	private int tiempoDeArmado;
 	
 	public PuestoDesarmable(int idUnidadDeVenta, String nombreComercial, String codigoUnico, double superficie,
-			Persona responsable, int cantCarpas, int tiempoDeArmado) {
+			Persona responsable, int cantCarpas, int tiempoDeArmado) throws Exception{
 		
 		super(idUnidadDeVenta, nombreComercial, codigoUnico, superficie, responsable);
 		

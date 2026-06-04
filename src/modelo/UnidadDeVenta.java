@@ -83,6 +83,45 @@ public abstract class UnidadDeVenta {
 		this.lstPlatos = lstPlatos;
 	}
 	
+	// LO MISMO QUE ENCONTRAR PERSONA PERO PARA ESTA LISTA
+	public Persona encontrarEmpleado(long dni) {
+	    Persona empleado = null;
+	    int i = 0;
+	    
+	    while (i < this.lstPersonas.size() && empleado == null) {
+	        if (this.lstPersonas.get(i).getDni() == dni) {
+	            empleado = this.lstPersonas.get(i);
+	        }
+	        i++;
+	    }
+	    
+	    return empleado;
+	}
+	
+	//LE LLEGA UNA PERSONA YA CREADA Y LA AGREGA A LA LISTA COMO EMPLEADO
+	public boolean agregarEmpleado(Persona empleado) throws Exception {
+	    if (this.encontrarEmpleado(empleado.getDni()) != null) {
+	        throw new Exception("El empleado ya está asignado.");
+	    }
+	   
+	    return this.lstPersonas.add(empleado);
+	}
+
+	//encontrarPlato
+	public Plato encontrarPlato(String nombre) {
+		Plato plato = null;
+		int i = 0;
+		
+		while(i < this.lstPlatos.size() && plato == null) {
+			if(this.lstPlatos.get(i).getNombre().equalsIgnoreCase(nombre)) {
+				plato = this.lstPlatos.get(i);
+			}
+			i++;
+		}
+		
+		return plato;
+	}
+	
 	@Override
 	public String toString() {
 		return "id: "+this.idUnidadDeVenta+", nombreComercial: "+this.nombreComercial+", codigoUnico: "+this.codigoUnico+", superficie: "+this.superficie+", responsable: "+ this.responsable+", lstPersonas: "+this.lstPersonas+", lstPlatos: "+this.lstPlatos;
