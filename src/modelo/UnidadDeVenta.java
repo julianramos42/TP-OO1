@@ -92,6 +92,8 @@ public abstract class UnidadDeVenta {
 			if (this.lstPlatos.get(i).getNombre().equals(nombre)) {
 				plato = this.lstPlatos.get(i);
 			}
+			
+			i++;
 		}
 
 		return plato;
