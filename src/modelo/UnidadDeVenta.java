@@ -110,14 +110,19 @@ public abstract class UnidadDeVenta {
 	//encontrarPlato
 	public Plato encontrarPlato(String nombre) {
 		Plato plato = null;
+		
 		int i = 0;
 		
-		while(i < this.lstPlatos.size() && plato == null) {
-			if(this.lstPlatos.get(i).getNombre().equalsIgnoreCase(nombre)) {
+		while (plato == null && i < this.lstPlatos.size()) {
+			if (this.lstPlatos.get(i).getNombre().equals(nombre)) {
 				plato = this.lstPlatos.get(i);
 			}
+			
 			i++;
 		}
+
+		return plato;
+	}
 	
 	@Override
 	public String toString() {
