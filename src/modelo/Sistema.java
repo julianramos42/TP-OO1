@@ -44,6 +44,7 @@ public class Sistema {
 			if (this.lstFestivales.get(i).getNombre().equals(nombre)) {
 				festival = this.lstFestivales.get(i);
 			}
+			i++;
 		}
 
 		return festival;
