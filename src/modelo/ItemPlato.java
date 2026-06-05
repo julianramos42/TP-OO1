@@ -41,6 +41,10 @@ public class ItemPlato {
 		return "ItemPlato [idItemPlato=" + idItemPlato + ", plato=" + plato + ", cantidad=" + cantidad + "]";
 	}
 	
+	public boolean equals(ItemPlato item){
+		return(this.getPlato.equals(item.getPlato().getNombre()) && this.getCantidad() == item.getCantidad());
+	}
+	
 	public double calcularTotaPorItem() {
 		return (this.getPlato().getPrecio() * cantidad);
 		
