@@ -42,7 +42,7 @@ public class ItemPlato {
 	}
 	
 	public boolean equals(ItemPlato item){
-		return(this.getPlato.equals(item.getPlato().getNombre()) && this.getCantidad() == item.getCantidad());
+		return(this.getPlato().equals(item.getPlato().getNombre()) && this.getCantidad() == item.getCantidad());
 	}
 	
 	public double calcularTotaPorItem() {
