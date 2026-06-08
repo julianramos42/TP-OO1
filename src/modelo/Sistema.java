@@ -9,17 +9,46 @@ public class Sistema {
 	private List<Festival> lstFestivales;
 	private List<UnidadDeVenta> lstUnidades;
 	private List<Persona> lstPersonal;
-	private List<Pedido> lstPedidos;
 	
 	public Sistema() {
 		super();
 		this.lstFestivales = new ArrayList<Festival>();
 		this.lstUnidades = new ArrayList<UnidadDeVenta>();
 		this.lstPersonal = new ArrayList<Persona>();
-		this.lstPedidos = new ArrayList<Pedido>();
 	}
 	
-//CASO DE USO 1: BUSQUEDA POR ATRIBUTO IDENTIFICADOR ----------------------------------
+	
+public List<Festival> getLstFestivales() {
+		return lstFestivales;
+	}
+
+
+	public void setLstFestivales(List<Festival> lstFestivales) {
+		this.lstFestivales = lstFestivales;
+	}
+
+
+	public List<UnidadDeVenta> getLstUnidades() {
+		return lstUnidades;
+	}
+
+
+	public void setLstUnidades(List<UnidadDeVenta> lstUnidades) {
+		this.lstUnidades = lstUnidades;
+	}
+
+
+	public List<Persona> getLstPersonal() {
+		return lstPersonal;
+	}
+
+
+	public void setLstPersonal(List<Persona> lstPersonal) {
+		this.lstPersonal = lstPersonal;
+	}
+
+
+	//CASO DE USO 1: BUSQUEDA POR ATRIBUTO IDENTIFICADOR ----------------------------------
 	//encontrarUnidad
 	public UnidadDeVenta encontrarUnidad(String codigoUnico) {
 		UnidadDeVenta unidad = null;
@@ -50,18 +79,6 @@ public class Sistema {
 		return festival;
 	}
 	
-	//encontrarPedido
-		public Pedido encontrarPedido(String codigoTransaccion) {
-			Pedido pedido = null;
-			int i = 0;
-			while(i < lstPedidos.size() && pedido == null) {
-				if(lstPedidos.get(i).getCodigoTransaccion().equalsIgnoreCase(codigoTransaccion)) {
-					pedido = lstPedidos.get(i);
-				}
-				i++;
-			}
-			return pedido;
-		}
 	//encontrarPersona
 	public Persona encontrarPersona(long dni) {
 		
@@ -77,6 +94,7 @@ public class Sistema {
 		}
 		return persona;
 	}
+	
 	
 //CASO DE USO 2: AGREGAR ELEMENTOS A UNA LISTA ----------------------------------
 	
@@ -163,36 +181,16 @@ public class Sistema {
 		return this.lstPersonal.add(new Cocinero(id, nombre, apellido, dni, fechaNacimiento, fechaIngreso, sueldoBase, especialidad, categoria, plusCategoria));
 	}
 	
-	//agregarPedido o validarPedido -> CASO DE USO 5
-		public boolean agregarPedido(String codigoTransaccion, UnidadDeVenta unidad, Festival festival, LocalDate fecha) throws Exception {
-			if(encontrarUnidad(unidad.getCodigoUnico()) == null || encontrarFestival(festival.getNombre()) == null) {
-				throw new Exception("La unidad o festival no existe");
-			}
-			int id = 1;
-			if(!lstPedidos.isEmpty()) {
-				id = lstPedidos.get(lstPedidos.size()-1).getIdPedido()+1;
-			}
-			return lstPedidos.add( new Pedido(id, codigoTransaccion, unidad, festival, fecha));
-		}
+	
 		
-	//agregarItem a Pedido
-	public boolean agregarItemAPedido(String nombre, int cantidad, String codigoTransaccion) throws Exception{
-		Pedido pedido = encontrarPedido(codigoTransaccion);
-		if(cantidad <= 0 || pedido == null) {
-			throw new Exception("Pedido no creado");
-		}
-		return pedido.agregarItemPlato(nombre, cantidad);
 		
-	}
 //CALCULOS ----------------------------------
 	// CALCULA LA RECAUDACION HISTORICA DE UNA UNIDAD DE VENTA
 	public double calcularRecaudacion(UnidadDeVenta unidad) {
 	    double recaudacionTotal = 0;
 	    
-	    for (Pedido pedido : this.lstPedidos) {
-	        if (pedido.getUnidad().equals(unidad)) {
+	    for (Pedido pedido : unidad.getLstPedidos()) {
 	            recaudacionTotal += pedido.calcularGanancia(); //NOS DEVUELVE LA GANANCIA DE CADA PEDIDO YA CALCULADA 
-	        }
 	    }
 	    
 	    return recaudacionTotal;
@@ -218,8 +216,8 @@ public class Sistema {
 	public double calcularRecaudacion(UnidadDeVenta unidad, LocalDate fechaDesde, LocalDate fechaHasta) {
 	    double recaudacionTotal = 0;
 	    
-	    for (Pedido pedido : this.lstPedidos) {
-	        if (pedido.getUnidad().equals(unidad) && !pedido.getFecha().isBefore(fechaDesde) && !pedido.getFecha().isAfter(fechaHasta)) { // SI ES IGUAL A LA UNIDAD, SI LA FECHA NO ESTA ANTES NI DESPUES (ENTONCES ESTA DENTRO O EN LOS EXTREMOS)
+	    for (Pedido pedido : unidad.getLstPedidos()) {
+	        if (!pedido.getFecha().isBefore(fechaDesde) && !pedido.getFecha().isAfter(fechaHasta)) { // SI ES IGUAL A LA UNIDAD, SI LA FECHA NO ESTA ANTES NI DESPUES (ENTONCES ESTA DENTRO O EN LOS EXTREMOS)
 	            recaudacionTotal += pedido.calcularGanancia(); 
 	        }
 	    }
@@ -278,6 +276,15 @@ public class Sistema {
 		}
 		return ranking;
 		
+	}
+	public List<Pedido> traerPedidosUnidad(UnidadDeVenta unidad){
+		List<Pedido> lstPedidosPorUnidad = new ArrayList<Pedido>();
+		if(encontrarUnidad(unidad.getCodigoUnico()) != null) {
+			for(Pedido p : unidad.getLstPedidos()) {
+					lstPedidosPorUnidad.add(p);
+		}
+		}
+		return lstPedidosPorUnidad;
 	}
 
 //ORDENAMIENTO ----------------------------------

@@ -87,6 +87,10 @@ public class Festival {
 				+ ", lstUnidades: " + this.lstUnidades + "]";
 	}
 	
+	public boolean equals(Festival festival) {
+		return(this.getNombre().equals(festival.getNombre()));
+	}
+	
 	public List<Persona> auditoriaPersonal() {
 	    List<Persona> personal = new ArrayList<Persona>();
 

@@ -7,16 +7,12 @@ import java.util.List;
 public class Pedido {
 
 	private int idPedido;
-	private String codigoTransaccion;
-	private UnidadDeVenta unidad;
 	private Festival festival;
 	private LocalDate fecha;
 	List<ItemPlato> lstItemPlatos;
 	
-	public Pedido(int idPedido, String codigoTransaccion, UnidadDeVenta unidad, Festival festival, LocalDate fecha) {
+	public Pedido(int idPedido, Festival festival, LocalDate fecha) {
 		this.idPedido = idPedido;
-		this.codigoTransaccion = codigoTransaccion;
-		this.unidad = unidad;
 		this.festival = festival;
 		this.fecha = fecha;
 		this.lstItemPlatos = new ArrayList<ItemPlato>();
@@ -28,22 +24,6 @@ public class Pedido {
 
 	public void setIdPedido(int idPedido) {
 		this.idPedido = idPedido;
-	}
-
-	public String getCodigoTransaccion() {
-		return codigoTransaccion;
-	}
-
-	public void setCodigoTransaccion(String codigoTransaccion) {
-		this.codigoTransaccion = codigoTransaccion;
-	}
-
-	public UnidadDeVenta getUnidad() {
-		return unidad;
-	}
-
-	public void setUnidad(UnidadDeVenta unidad) {
-		this.unidad = unidad;
 	}
 
 	public Festival getFestival() {
@@ -72,13 +52,9 @@ public class Pedido {
 
 	@Override
 	public String toString() {
-		return "Pedido [idPedido=" + idPedido + ", codigoTransaccion=" + codigoTransaccion + ", unidad=" + unidad
-				+ ", festival=" + festival + ", fecha=" + fecha + ", lstItemPlatos=" + lstItemPlatos + "]";
+		return "Pedido [idPedido=" + idPedido + " festival=" + festival + ", fecha=" + fecha + ", lstItemPlatos=" + lstItemPlatos + "]";
 	}
 	
-	public boolean equals(Pedido pedido) {
-		return(this.getCodigoTransaccion().equalsIgnoreCase(pedido.getCodigoTransaccion()));
-	}
 	
 	public double calcularTotal() {
 		double total = 0;
@@ -95,10 +71,13 @@ public class Pedido {
 		}
 		return(this.calcularTotal() - costos);
 	}
-	public boolean agregarItemPlato(String nombrePlato, int cantidad) throws Exception {
+	public boolean agregarItemPlato(UnidadDeVenta unidad, String nombrePlato, int cantidad) throws Exception {
 		Plato plato = unidad.encontrarPlato(nombrePlato);
 		if(plato == null) {
 			throw new Exception("El plato no forma parte del menú de esta unidad");
+		}
+		if(cantidad <= 0) {
+			throw new Exception("La cantidad del plato no puede ser menor a 1");
 		}
 		int id = 1;
 		if(!lstItemPlatos.isEmpty()) {
