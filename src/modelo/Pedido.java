@@ -71,7 +71,7 @@ public class Pedido {
 		}
 		return(this.calcularTotal() - costos);
 	}
-	public boolean agregarItemPlato(String nombrePlato, int cantidad) throws Exception {
+	public boolean agregarItemPlato(Plato plato, int cantidad) throws Exception {
 		if(plato == null) {
 			throw new Exception("El plato no forma parte del menú de esta unidad");
 		}
