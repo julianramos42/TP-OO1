@@ -186,4 +186,39 @@ public abstract class UnidadDeVenta {
 		}
 		return lstPedidos.add(new Pedido(id, festival, fecha));
 	}
+	
+	
+	private int calcularCantidadPedidaEnFestival(Plato plato, Festival festival) {
+		int cantidad = 0;
+
+		for (Pedido pedido : this.lstPedidos) {
+			if (pedido.getFestival().equals(festival)) {
+				for (ItemPlato item : pedido.getLstItemPlatos()) {
+					if (item.getPlato().equals(plato)) {
+						cantidad += item.getCantidad();
+					}
+				}
+			}
+		}
+
+		return cantidad;
+	}
+	
+	public Plato traerPlatoEstrella(Festival festival) {
+		Plato platoEstrella = null;
+		int mayorCantidad = 0;
+
+		for (Plato plato : this.lstPlatos) {
+			int cantidad = this.calcularCantidadPedidaEnFestival(plato, festival);
+
+			if (cantidad > mayorCantidad) {
+				mayorCantidad = cantidad;
+				platoEstrella = plato;
+			}
+		}
+
+		return platoEstrella;
+	}
 }
+
+
