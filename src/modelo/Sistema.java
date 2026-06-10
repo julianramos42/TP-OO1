@@ -99,7 +99,7 @@ public List<Festival> getLstFestivales() {
 //CASO DE USO 2: AGREGAR ELEMENTOS A UNA LISTA ----------------------------------
 	
 	//agregarFestival
-	public boolean agregarFestival(String nombre, String temporada, LocalDate fechaInicio, LocalDate fechaFin, double porSuperficie, double porMonataje, double porElectricidad) throws Exception {
+	public boolean agregarFestival(String nombre, String temporada, LocalDate fechaInicio, LocalDate fechaFin, double porSuperficie, double porMontaje, double porElectricidad) throws Exception {
 		if(this.encontrarFestival(nombre) != null) {
 			throw new Exception("El festival ya existe.");
 		}
@@ -112,7 +112,7 @@ public List<Festival> getLstFestivales() {
 			id = this.lstFestivales.get(this.lstFestivales.size() - 1).getIdFestival() + 1;
 		}
 		
-		return this.lstFestivales.add(new Festival(id, nombre, temporada, fechaInicio, fechaFin, porSuperficie, porMonataje, porElectricidad));
+		return this.lstFestivales.add(new Festival(id, nombre, temporada, fechaInicio, fechaFin, porSuperficie, porMontaje, porElectricidad));
 	}
 	
 	//agregarFoodTruck

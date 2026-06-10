@@ -6,9 +6,9 @@ public class Costo {
 	private double porMontaje;
 	private double porElectricidad;
 	
-	public Costo(double porSuperficie, double porMonataje, double porElectricidad) {
+	public Costo(double porSuperficie, double porMontaje, double porElectricidad) {
 		this.porSuperficie = porSuperficie;
-		this.porMontaje = porMonataje;
+		this.porMontaje = porMontaje;
 		this.porElectricidad = porElectricidad;
 	}
 
