@@ -13,14 +13,13 @@ public class Festival {
 	private Costo costo;
 	private List<UnidadDeVenta> lstUnidades;
 	
-	public Festival(int idFestival, String nombre, String temporada, LocalDate fechaInicio, LocalDate fechaFin,
-			Costo costo) {
+	public Festival(int idFestival, String nombre, String temporada, LocalDate fechaInicio, LocalDate fechaFin, double porSuperficie, double porMonataje, double porElectricidad) {
 		this.idFestival = idFestival;
 		this.nombre = nombre;
 		this.temporada = temporada;
 		this.fechaInicio = fechaInicio;
 		this.fechaFin = fechaFin;
-		this.costo = costo;
+		this.costo = new Costo(porSuperficie, porMonataje, porElectricidad);
 		this.lstUnidades = new ArrayList<UnidadDeVenta>();
 	}
 

@@ -6,19 +6,10 @@ public class Costo {
 	private double porMontaje;
 	private double porElectricidad;
 	
-	public Costo(int idCosto, double porSuperficie, double porMonataje, double porElectricidad) {
-		this.idCosto = idCosto;
+	public Costo(double porSuperficie, double porMonataje, double porElectricidad) {
 		this.porSuperficie = porSuperficie;
 		this.porMontaje = porMonataje;
 		this.porElectricidad = porElectricidad;
-	}
-
-	public int getIdCosto() {
-		return idCosto;
-	}
-
-	public void setIdCosto(int idCosto) {
-		this.idCosto = idCosto;
 	}
 
 	public double getPorSuperficie() {
