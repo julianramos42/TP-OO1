@@ -54,7 +54,9 @@ public class Pedido {
 	public String toString() {
 		return "Pedido [idPedido=" + idPedido + " festival=" + festival + ", fecha=" + fecha + ", lstItemPlatos=" + lstItemPlatos + "]";
 	}
-	
+	public boolean equals(Pedido pedido){
+		return(this.getIdPedido() == pedido.getIdPedido());
+	}
 	
 	public double calcularTotal() {
 		double total = 0;
