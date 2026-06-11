@@ -52,7 +52,7 @@ public class Pedido {
 
 	@Override
 	public String toString() {
-		return "Pedido [idPedido=" + idPedido + " festival=" + festival + ", fecha=" + fecha + ", lstItemPlatos=" + lstItemPlatos + "]";
+		return "Pedido [idPedido=" + idPedido + " festival=" + festival.getNombre() + ", fecha=" + fecha + ", lstItemPlatos=\n" + lstItemPlatos + "]";
 	}
 	public boolean equals(Pedido pedido){
 		return(this.getIdPedido() == pedido.getIdPedido());

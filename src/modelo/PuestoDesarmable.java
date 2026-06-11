@@ -31,7 +31,7 @@ public class PuestoDesarmable extends UnidadDeVenta {
 	
 	@Override
 	public String toString() {
-		return "PuestoDesarmable: "+super.toString()+", cantCarpas: "+this.cantCarpas+", tiempoDeArmado: "+this.tiempoDeArmado;
+		return "PUESTO DESARMABLE: "+super.toString()+", cantCarpas: "+this.cantCarpas+", tiempoDeArmado: "+this.tiempoDeArmado;
 	}
 	
 	@Override

@@ -99,7 +99,7 @@ public abstract class Persona {
 
 	@Override
 	public String toString() {
-		return "\nPersona [idPersona=" + idPersona + ", nombre=" + nombre + ", apellido=" + apellido + ", dni=" + dni
+		return "[idPersona=" + idPersona + ", nombre=" + nombre + ", apellido=" + apellido + ", dni=" + dni
 				+ ", fechaNacimiento=" + fechaNacimiento + ", fechaIngreso=" + fechaIngreso + ", sueldoBase="
 				+ sueldoBase + "]";
 	}

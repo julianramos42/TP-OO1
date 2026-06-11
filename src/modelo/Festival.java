@@ -81,9 +81,9 @@ public class Festival {
 	
 	@Override
 	public String toString() {
-		return "FESTIVAL [ id: " + this.idFestival + ", nombre: " + this.nombre + ", temporada: " + this.temporada
+		return "\nFESTIVAL [ id: " + this.idFestival + ", nombre: " + this.nombre + ", temporada: " + this.temporada
 				+ ", fechaInicio: " + this.fechaInicio + ", fechaFin: " + this.fechaFin + ", costo: " + this.costo
-				+ ", lstUnidades: " + this.lstUnidades + "]";
+				+ ",\n lstUnidades: " + this.lstUnidades + "]";
 	}
 	
 	public boolean equals(Festival festival) {

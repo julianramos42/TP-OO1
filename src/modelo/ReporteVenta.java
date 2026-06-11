@@ -41,7 +41,7 @@ public class ReporteVenta {
 
 	@Override
 	public String toString() {
-		return "ReporteVenta [fecha=" + fecha + ", unidad=" + unidad + ", recaudacion=" + recaudacion + "]";
+		return "ReporteVenta [fecha=" + fecha + ", unidad=" + unidad.getNombreComercial() + ", recaudacion=" + recaudacion + "]";
 	}
 
 	

@@ -38,7 +38,7 @@ public class ReporteMayorCanon {
 
 	@Override
 	public String toString() {
-		return "ReporteMayoresCanon [unidad=" + unidad + ", canon=" + canon + "]";
+		return "ReporteMayoresCanon [unidad=" + unidad.getNombreComercial() + ", canon=" + canon + "]";
 	}	
 
 }

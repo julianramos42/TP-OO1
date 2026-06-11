@@ -141,7 +141,7 @@ public abstract class UnidadDeVenta {
 	public String toString() {
 		return "UnidadDeVenta [idUnidadDeVenta=" + idUnidadDeVenta + ", nombreComercial=" + nombreComercial
 				+ ", codigoUnico=" + codigoUnico + ", superficie=" + superficie + ", responsable=" + responsable
-				+ ", lstPersonas=" + lstPersonas + ", lstPlatos=" + lstPlatos + ", lstPedidos=" + lstPedidos + "]";
+				+ ",\n lstPersonas=" + lstPersonas + ",\n lstPlatos=" + lstPlatos + ",\n lstPedidos=" + lstPedidos + "]";
 	}
 
 	public boolean equals(UnidadDeVenta unidad) {
