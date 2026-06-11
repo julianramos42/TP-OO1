@@ -151,7 +151,7 @@ public List<Festival> getLstFestivales() {
 		    }
 		    
 		    if(Period.between(fechaNacimiento, LocalDate.now()).getYears() < 18) {
-		        throw new Exception("ERROR: El empleado debe ser mayor de edad.");
+		        throw new Exception("ERROR El empleado debe ser mayor de edad.");
 		    }
 		    
 		    int id = 1;
@@ -170,7 +170,7 @@ public List<Festival> getLstFestivales() {
 		}
 		
 		if(Period.between(fechaNacimiento, LocalDate.now()).getYears() < 18) {
-			throw new Exception("ERROR: El empleado debe ser mayor de edad.");
+			throw new Exception("ERROR El empleado debe ser mayor de edad.");
 		}
 		
 		int id = 1;

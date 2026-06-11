@@ -108,12 +108,7 @@ public abstract class Persona {
 		
 		return persona.getDni() == this.dni;
 	}
-	
-	public int calcularEdad() {
-		
-		return Period.between(this.fechaNacimiento, LocalDate.now()).getYears();
-	}
-	
+
 	public int validarAntiguedad(LocalDate fechaActual) {
 		
 		return Period.between(this.fechaIngreso, fechaActual).getYears();

@@ -42,7 +42,7 @@ public class Cocinero extends Persona{
 
 	@Override
 	public String toString() {
-		return "Cocinero "+super.toString()+"[especialidad=" + especialidad + ", categoria=" + categoria + ", plusCategoria="
+		return "\nCocinero "+super.toString()+"[especialidad=" + especialidad + ", categoria=" + categoria + ", plusCategoria="
 				+ plusCategoria + "]";
 	}
 	

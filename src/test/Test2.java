@@ -297,7 +297,7 @@ public class Test2 {
 		try {
 			System.out.println("Cantidad de empleados encontrados: " + sistema.filtroPorEdad(
 				LocalDate.of(1990, 1, 1),
-				LocalDate.of(2000, 12, 31)
+				LocalDate.of(1994, 12, 31)
 			).size());
 
 			System.out.println(sistema.filtroPorEdad(LocalDate.of(1990, 1, 1), LocalDate.of(2000, 12, 31)));
@@ -404,8 +404,9 @@ public class Test2 {
 		System.out.println("\n===== FIN DE TESTS =====");
 		
 		System.out.println("\n===== TEST CON ERRORES =====");
+
 		// ============================================================
-		// FESTIVAL EXISTENTE
+		// PERSONA EXISTENTE
 		// ============================================================
 		try {
 			sistema.agregarCocinero(
@@ -422,6 +423,25 @@ public class Test2 {
 		}catch (Exception e) {
 			System.out.println("ERROR " + e.getMessage());
 		}
+		
+		// ============================================================
+		// INTENTO DE CARGA DE UN MENOR DE EDAD
+		// ============================================================
+				try {
+					sistema.agregarCocinero(
+							"Pedrito",
+							"Gomez",
+							44555666,
+							LocalDate.of(2015, 8, 20), // 11 años
+							LocalDate.of(2026, 6, 1),
+							10000,
+							"Ayudante",
+							"C",
+							500
+						);
+				} catch (Exception e) {
+					System.out.println(e.getMessage());
+				}
 		// ============================================================
 		// UNIDAD EXISTENTE
 		// ============================================================
@@ -438,8 +458,9 @@ public class Test2 {
 			System.out.println("ERROR " + e.getMessage());
 		}
 		// ============================================================
-		// PERSONA EXISTENTE
+		// FESTIVAL EXISTENTE
 		// ============================================================
+
 		try {
 			sistema.agregarFestival(
 					"Festival Verano",
@@ -453,19 +474,20 @@ public class Test2 {
 		}catch (Exception e) {
 			System.out.println("ERROR " + e.getMessage());
 		}
-		
 		// ============================================================
-		// PEDIR PLATO QUE NO ESTA EN EL MENÚ
-		// ===========================================================
+		// UNIDAD NO PERTENECE AL FESTIVAL
+		// ============================================================
+		
+
 		try {
 			sistema.agregarPedidoAUnidad(sistema.encontrarUnidad("ABC1234567"), sistema.encontrarFestival("Festival Invierno"), LocalDate.of(2026, 1, 1));
 		}catch(Exception e) {
 			System.out.println("ERROR " + e.getMessage());
 		}
+
 		// ============================================================
 		// PEDIR PLATO QUE NO ESTA EN EL MENÚ
-		// ============================================================
-		
+		// ===========================================================
 		try {
 			sistema.encontrarUnidad("ABC1234567")
 			.encontrarPedido(1)

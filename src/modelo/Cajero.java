@@ -32,12 +32,12 @@ public class Cajero extends Persona{
 
 	@Override
 	public String toString() {
-		return "Cajero "+super.toString()+"[turno=" + turno + ", bonoPorAntiguedad=" + bonoPorAntiguedad + "]";
+		return "\nCajero "+super.toString()+"[turno=" + turno + ", bonoPorAntiguedad=" + bonoPorAntiguedad + "]";
 	}
 	
 	public double calcularSueldo() {
-		// Sueldo Base + (Antigüedad * bono
-		return (this.sueldoBase + (this.validarAntiguedad(LocalDate.now()))*this.bonoPorAntiguedad);
+		// Sueldo Base + (Antigüedad * bono)
+		return (this.sueldoBase + (this.validarAntiguedad(LocalDate.now())*this.bonoPorAntiguedad));
 	}
 	
 	
