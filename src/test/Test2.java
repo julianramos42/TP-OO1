@@ -168,8 +168,8 @@ public class Test2 {
 
 		try {
 			System.out.println("Persona encontrada: " + sistema.encontrarPersona(87654321));
-			System.out.println("Unidad encontrada: " + sistema.encontrarUnidad("ABC1234567"));
-			System.out.println("Festival encontrado: " + sistema.encontrarFestival("Festival Verano"));
+			System.out.println("\nUnidad encontrada: " + sistema.encontrarUnidad("ABC1234567"));
+			System.out.println("\nFestival encontrado: " + sistema.encontrarFestival("Festival Verano"));
 		} catch (Exception e) {
 			System.out.println("ERROR " + e.getMessage());
 		}
@@ -215,24 +215,15 @@ public class Test2 {
 		System.out.println("\nCU 5 - Registro de pedido");
 
 		try {
-			sistema.encontrarUnidad("ABC1234567").agregarPedido(
-				sistema.encontrarFestival("Festival Verano"),
-				LocalDate.of(2026, 1, 2)
-			);
+			
+			sistema.agregarPedidoAUnidad(sistema.encontrarUnidad("ABC1234567"), sistema.encontrarFestival("Festival Verano"), LocalDate.of(2026, 1, 2));
 
-			sistema.encontrarUnidad("ABC1234567").agregarPedido(
-				sistema.encontrarFestival("Festival Verano"),
-				LocalDate.of(2026, 1, 3)
-			);
+			sistema.agregarPedidoAUnidad(sistema.encontrarUnidad("ABC1234567"), sistema.encontrarFestival("Festival Verano"), LocalDate.of(2026, 1, 3));
+	
+			sistema.agregarPedidoAUnidad(sistema.encontrarUnidad("XYZ1234567"), sistema.encontrarFestival("Festival Verano"), LocalDate.of(2026, 1, 2));
 
-			sistema.encontrarUnidad("XYZ1234567").agregarPedido(
-				sistema.encontrarFestival("Festival Verano"),
-				LocalDate.of(2026, 1, 2)
-			);
-			sistema.encontrarUnidad("PAN1234567").agregarPedido(
-					sistema.encontrarFestival("Festival Verano"),
-					LocalDate.of(2026, 1, 4)
-			);
+			sistema.agregarPedidoAUnidad(sistema.encontrarUnidad("PAN1234567"), sistema.encontrarFestival("Festival Verano"), LocalDate.of(2026, 1, 4));
+
 		} catch (Exception e) {
 			System.out.println("ERROR " + e.getMessage());
 		}
@@ -244,36 +235,30 @@ public class Test2 {
 		System.out.println("\nCarga de items a pedidos");
 
 		try {
-			sistema.encontrarUnidad("ABC1234567")
-				.encontrarPedido(sistema.encontrarFestival("Festival Verano"), 1)
-				.agregarItemPlato(
+			
+			sistema.encontrarUnidad("ABC1234567").encontrarPedido(1).agregarItemPlato(
 					sistema.encontrarUnidad("ABC1234567").encontrarPlato("Hamburguesa"),
 					2
 				);
 
-			sistema.encontrarUnidad("ABC1234567")
-				.encontrarPedido(sistema.encontrarFestival("Festival Verano"), 1)
+			sistema.encontrarUnidad("ABC1234567").encontrarPedido(1)
 				.agregarItemPlato(
 					sistema.encontrarUnidad("ABC1234567").encontrarPlato("Pizza"),
 					1
 				);
 
-			sistema.encontrarUnidad("ABC1234567")
-				.encontrarPedido(sistema.encontrarFestival("Festival Verano"), 2)
+			sistema.encontrarUnidad("ABC1234567").encontrarPedido(2)
 				.agregarItemPlato(
 					sistema.encontrarUnidad("ABC1234567").encontrarPlato("Hamburguesa"),
 					3
 				);
 
-			sistema.encontrarUnidad("XYZ1234567")
-				.encontrarPedido(sistema.encontrarFestival("Festival Verano"), 1)
+			sistema.encontrarUnidad("XYZ1234567").encontrarPedido(1)
 				.agregarItemPlato(
 					sistema.encontrarUnidad("XYZ1234567").encontrarPlato("Empanada"),
 					10
 				);
-
-			sistema.encontrarUnidad("PAN1234567")
-				.encontrarPedido(sistema.encontrarFestival("Festival Verano"), 1)
+			sistema.encontrarUnidad("PAN1234567").encontrarPedido(1)
 				.agregarItemPlato(
 					sistema.encontrarUnidad("PAN1234567").encontrarPlato("Pancho"),
 					1
@@ -282,8 +267,8 @@ public class Test2 {
 			System.out.println("ERROR " + e.getMessage());
 		} finally {
 			System.out.println("Pedidos de " + sistema.encontrarUnidad("ABC1234567").getNombreComercial() + " "+ sistema.encontrarUnidad("ABC1234567").getLstPedidos());
-			System.out.println("Pedidos de " + sistema.encontrarUnidad("XYZ1234567").getNombreComercial() + " "+ sistema.encontrarUnidad("XYZ1234567").getLstPedidos());
-			System.out.println("Pedidos de " + sistema.encontrarUnidad("PAN1234567").getNombreComercial() + " "+ sistema.encontrarUnidad("PAN1234567").getLstPedidos());
+			System.out.println("\nPedidos de " + sistema.encontrarUnidad("XYZ1234567").getNombreComercial() + " "+ sistema.encontrarUnidad("XYZ1234567").getLstPedidos());
+			System.out.println("\nPedidos de " + sistema.encontrarUnidad("PAN1234567").getNombreComercial() + " "+ sistema.encontrarUnidad("PAN1234567").getLstPedidos());
 		}
 
 		// ============================================================
@@ -471,11 +456,19 @@ public class Test2 {
 		
 		// ============================================================
 		// PEDIR PLATO QUE NO ESTA EN EL MENÚ
+		// ===========================================================
+		try {
+			sistema.agregarPedidoAUnidad(sistema.encontrarUnidad("ABC1234567"), sistema.encontrarFestival("Festival Invierno"), LocalDate.of(2026, 1, 1));
+		}catch(Exception e) {
+			System.out.println("ERROR " + e.getMessage());
+		}
+		// ============================================================
+		// PEDIR PLATO QUE NO ESTA EN EL MENÚ
 		// ============================================================
 		
 		try {
 			sistema.encontrarUnidad("ABC1234567")
-			.encontrarPedido(sistema.encontrarFestival("Festival Verano"), 1)
+			.encontrarPedido(1)
 			.agregarItemPlato(
 				sistema.encontrarUnidad("ABC1234567").encontrarPlato("Nuggets"),
 				2

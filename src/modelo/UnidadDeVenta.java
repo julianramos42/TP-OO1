@@ -140,7 +140,7 @@ public abstract class UnidadDeVenta {
 	@Override
 	public String toString() {
 		return "UnidadDeVenta [idUnidadDeVenta=" + idUnidadDeVenta + ", nombreComercial=" + nombreComercial
-				+ ", codigoUnico=" + codigoUnico + ", superficie=" + superficie + ", responsable=" + responsable
+				+ ", codigoUnico=" + codigoUnico + ", superficie=" + superficie + ", \nresponsable=" + responsable
 				+ ",\n lstPersonas=" + lstPersonas + ",\n lstPlatos=" + lstPlatos + ",\n lstPedidos=" + lstPedidos + "]";
 	}
 
@@ -167,11 +167,11 @@ public abstract class UnidadDeVenta {
 	public abstract double calcularCanon(double costoSuperficie, double costoAdicional);
 	
 	//encontrarPedido
-	public Pedido encontrarPedido(Festival festival, int id) {
+	public Pedido encontrarPedido(int id) {
 		Pedido pedido = null;
 		int i = 0;
 		while(i < lstPedidos.size() && pedido == null) {
-			if(lstPedidos.get(i).getIdPedido() == id && lstPedidos.get(i).getFestival().equals(festival)) {
+			if(lstPedidos.get(i).getIdPedido() == id) {
 				pedido = lstPedidos.get(i);
 			}
 			i++;
