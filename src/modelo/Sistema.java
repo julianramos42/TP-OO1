@@ -366,6 +366,23 @@ public List<Festival> getLstFestivales() {
 		return lstMayorCanon;
 		
 	}
-	
+	public boolean agregarPedidoAUnidad(UnidadDeVenta unidad, Festival festival, LocalDate fecha) throws Exception{
+		if(encontrarFestival(festival.getNombre()) == null) {
+			throw new Exception("Este festival no existe en el sistema.");
+		}
+		int i = 0;
+		boolean existente = false;
+		while(i < festival.getLstUnidades().size() && existente == false) {
+			if(festival.getLstUnidades().get(i).getCodigoUnico().equals(unidad.getCodigoUnico())) {
+				existente = true;
+			}
+			i++;
+		}
+		if(!existente) {
+			throw new Exception("Esta unidad no forma parte del festival ingresado.");
+		}
+		
+		return(unidad.agregarPedido(festival, fecha));
+	}
 		
 }
